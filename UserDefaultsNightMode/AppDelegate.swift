@@ -20,40 +20,35 @@ var window: UIWindow?
     func checkIfFirstLaunch() {
         // we have Bool forKey "hasLaunchedBefore" to check if the app has ever launched,
         if UserDefaults.standard.bool(forKey: "hasLaunchedBefore") {
-            print("App has launched before")
+            print("App had already launched before")
         } else {
-            // and if it hasn't we know that "This is the first launch ever!"
-            print("This is the first launch ever!")
-            // and in this other section, we can set the Bool for has launched before to true.
+            // and if it hasn't we know that "This is the first that app does launch"
+            print("This is the first that app does launch")
+            // and in this else section, we can set the Bool for "hasLaunchedBefore" to true.
             UserDefaults.standard.set(true, forKey: "hasLaunchedBefore")
-            // 05:33 Here we'll also set the default value for midnight theme on, so that we know it's taking care for the rest of the app.
+            // 05:33 Here we'll also set the default value for "midnightThemeOn", so that we know it's taking care for the rest of the app.
             UserDefaults.standard.set(false, forKey: "midnightThemeOn")
-            UserDefaults.standard.synchronize()
             // 05:37 Then we can go back to ViewController ... move thre 
         }
     }
     // */
-
+    
+    // As per Q&A mentor help: The purpose of the code with user defaults is to show that it can tell if the app has launched for the first time or if it has launched before. This is done in the method `checkIfFirstLaunch()`
+    // However, this method is not called in the project at all. So, it's not possible to check if the variable "hasLaunchedBefore" is in the device or not. You'll have to call the method in some way. I recommend calling the method in the `didFinishLaunchingWithOptions` method of the app delegate:
+/*
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        // calling the method 'checkIfFirstLaunch()' in the `didFinishLaunchingWithOptions` method of the AppDelegate:
+        // /*
+        checkIfFirstLaunch()
+        //  */
         return true
     }
-    
-/*
-    // MARK: UISceneSession Lifecycle
-
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        // Called when a new scene session is being created.
-        // Use this method to select a configuration to create the new scene with.
-        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-    }
-
-    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-        // Called when the user discards a scene session.
-        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
-    }
 */
-
+    func applicationDidFinishLaunching(_ application: UIApplication) {
+        checkIfFirstLaunch()
+        // return true
+    }
+    
 }
 
